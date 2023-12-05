@@ -16,6 +16,17 @@ namespace CursachSUBD
         {
             InitializeComponent();
         }
+        public ClientRedact(string fn, string md, string ln, string phone,string idchoose, string pS, string pN)
+        {
+            InitializeComponent();
+            textBox1.Text = fn;
+            textBox2.Text = md;
+            textBox3.Text = ln;
+            textBox4.Text = phone;
+            textBox5.Text = idchoose;
+            textBox6.Text = pS;
+            textBox7.Text = pN;
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {

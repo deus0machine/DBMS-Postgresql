@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Npgsql;
@@ -23,7 +24,7 @@ namespace CursachSUBD
             conn = new NpgsqlConnection(connstring);
             Select();
         }
-        private new void Select()
+        private new void Select() // Ререндер данных таблицы
         {
             try 
             {
@@ -43,7 +44,7 @@ namespace CursachSUBD
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //Открытие формы добавления клиента
         {
             int result;
             ClientRedact insert = new ClientRedact();
@@ -71,14 +72,81 @@ namespace CursachSUBD
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Изменение информации о клиенте
         {
-
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose client to update");
+                return;
+            }
+            int result;
+            ClientRedact update = new ClientRedact(dataGridView1.Rows[rowIndex].Cells["cl_firstname"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["cl_midname"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["cl_lastname"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["cl_phonenumber"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["cl_idchoose"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["cl_passportseries"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["cl_passportnumber"].Value.ToString());
+            update.ShowDialog();
+            try
+            {
+                conn.Open();
+                sql = @"select * from cl_update(:_id, :_firstname, :_midname, :_lastname, :_phonenumber, :_idchoose, :_passportseries, :_passportnumber)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["cl_id"].Value.ToString()));
+                cmd.Parameters.AddWithValue("_firstname", update.Firstname);
+                cmd.Parameters.AddWithValue("_midname", update.Midname);
+                cmd.Parameters.AddWithValue("_lastname", update.Lastname);
+                cmd.Parameters.AddWithValue("_phonenumber", update.Phonenumber);
+                cmd.Parameters.AddWithValue("_idchoose", update.IdChoose);
+                cmd.Parameters.AddWithValue("_passportseries", update.PassportSeries);
+                cmd.Parameters.AddWithValue("_passportnumber", update.PassportNumber);
+                result = (int)cmd.ExecuteScalar();
+                conn.Close();
+                if (result == 1)
+                {
+                    MessageBox.Show("Updated successfully");
+                    Select();
+                }
+                else
+                {
+                    MessageBox.Show("Updated failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                MessageBox.Show("Deleted fail. Error: " + ex.Message);
+            }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) // Удаление записи о клиенте
         {
-
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose client to delete");
+                return;
+            }
+            try
+            {
+                conn.Open();
+                sql = @"select * from cl_delete(:_id)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["cl_id"].Value.ToString()));
+                if ((int)cmd.ExecuteScalar() == 1)
+                {
+                    MessageBox.Show("Delete client successfully");
+                    rowIndex = -1;
+                    conn.Close();
+                    Select();
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                MessageBox.Show("Deleted fail. Error: " + ex.Message);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -91,6 +159,22 @@ namespace CursachSUBD
         {
             Rooms rooms = new Rooms();
             rooms.ShowDialog();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                rowIndex = e.RowIndex;
+/*                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["firstname"].Value.ToString();
+                textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["midname"].Value.ToString();
+                textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["lastname"].Value.ToString();*/
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
