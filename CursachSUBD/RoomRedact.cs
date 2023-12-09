@@ -1,18 +1,29 @@
 ﻿using System;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CursachSUBD
 {
     public partial class RoomRedact : Form
     {
+        public int res = 0;
         public string Status;
         public string Type;
         public string Cost;
         public string Adress;
-        public string IdHotel;
+        public int IdHotel;
         public RoomRedact()
         {
             InitializeComponent();
+        }
+        public RoomRedact(string st, string tp, string cst, string adr, string idh)
+        {
+            InitializeComponent();
+            comboBox1.Text = st;
+            comboBox2.Text = tp;
+            textBox3.Text = cst;
+            textBox1.Text = adr;
+            textBox2.Text = idh;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -23,7 +34,8 @@ namespace CursachSUBD
                 Type = comboBox2.Text;
                 Cost = textBox3.Text;
                 Adress = textBox1.Text;
-                IdHotel = textBox2.Text;
+                IdHotel = int.Parse(textBox2.Text);
+                res = 1;
                 this.Close();
             }
             else

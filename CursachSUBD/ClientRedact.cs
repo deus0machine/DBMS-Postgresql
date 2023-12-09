@@ -5,6 +5,7 @@ namespace CursachSUBD
 {
     public partial class ClientRedact : Form
     {
+        public int res = 0;
         public string Firstname;
         public string Midname;
         public string Lastname;
@@ -44,6 +45,7 @@ namespace CursachSUBD
                 IdChoose = textBox5.Text;
                 PassportSeries = textBox6.Text;
                 PassportNumber = textBox7.Text;
+                res = 1;
                 this.Close();
             }
             else

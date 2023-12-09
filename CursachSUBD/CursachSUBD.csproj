@@ -119,6 +119,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotelRedact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HotelRedact.Designer.cs">
+      <DependentUpon>HotelRedact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hotels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Hotels.Designer.cs">
+      <DependentUpon>Hotels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomRedact.cs">
@@ -144,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HotelRedact.resx">
+      <DependentUpon>HotelRedact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hotels.resx">
+      <DependentUpon>Hotels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

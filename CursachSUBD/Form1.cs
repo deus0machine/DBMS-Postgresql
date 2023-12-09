@@ -49,26 +49,29 @@ namespace CursachSUBD
             int result;
             ClientRedact insert = new ClientRedact();
             insert.ShowDialog();
-            conn.Open();
-            sql = @"select * from cl_insert(:_firstname, :_midname, :_lastname, :_phonenumber, :_idchoose, :_passportseries, :_passportnumber)";
-            cmd = new NpgsqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("_firstname", insert.Firstname);
-            cmd.Parameters.AddWithValue("_midname", insert.Midname);
-            cmd.Parameters.AddWithValue("_lastname", insert.Lastname);
-            cmd.Parameters.AddWithValue("_phonenumber", insert.Phonenumber);
-            cmd.Parameters.AddWithValue("_idchoose", insert.IdChoose);
-            cmd.Parameters.AddWithValue("_passportseries", insert.PassportSeries);
-            cmd.Parameters.AddWithValue("_passportnumber", insert.PassportNumber);
-            result = (int)cmd.ExecuteScalar();
-            conn.Close();
-            if (result == 1)
+            if (insert.res == 1)
             {
-                MessageBox.Show("Inserted new client successfully");
-                Select();
-            }
-            else
-            {
-                MessageBox.Show("Inserted fail");
+                conn.Open();
+                sql = @"select * from cl_insert(:_firstname, :_midname, :_lastname, :_phonenumber, :_idchoose, :_passportseries, :_passportnumber)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_firstname", insert.Firstname);
+                cmd.Parameters.AddWithValue("_midname", insert.Midname);
+                cmd.Parameters.AddWithValue("_lastname", insert.Lastname);
+                cmd.Parameters.AddWithValue("_phonenumber", insert.Phonenumber);
+                cmd.Parameters.AddWithValue("_idchoose", insert.IdChoose);
+                cmd.Parameters.AddWithValue("_passportseries", insert.PassportSeries);
+                cmd.Parameters.AddWithValue("_passportnumber", insert.PassportNumber);
+                result = (int)cmd.ExecuteScalar();
+                conn.Close();
+                if (result == 1)
+                {
+                    MessageBox.Show("Inserted new client successfully");
+                    Select();
+                }
+                else
+                {
+                    MessageBox.Show("Inserted fail");
+                }
             }
         }
 
@@ -90,33 +93,36 @@ namespace CursachSUBD
             update.ShowDialog();
             try
             {
-                conn.Open();
-                sql = @"select * from cl_update(:_id, :_firstname, :_midname, :_lastname, :_phonenumber, :_idchoose, :_passportseries, :_passportnumber)";
-                cmd = new NpgsqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["cl_id"].Value.ToString()));
-                cmd.Parameters.AddWithValue("_firstname", update.Firstname);
-                cmd.Parameters.AddWithValue("_midname", update.Midname);
-                cmd.Parameters.AddWithValue("_lastname", update.Lastname);
-                cmd.Parameters.AddWithValue("_phonenumber", update.Phonenumber);
-                cmd.Parameters.AddWithValue("_idchoose", update.IdChoose);
-                cmd.Parameters.AddWithValue("_passportseries", update.PassportSeries);
-                cmd.Parameters.AddWithValue("_passportnumber", update.PassportNumber);
-                result = (int)cmd.ExecuteScalar();
-                conn.Close();
-                if (result == 1)
+                if (update.res == 1)
                 {
-                    MessageBox.Show("Updated successfully");
-                    Select();
-                }
-                else
-                {
-                    MessageBox.Show("Updated failed");
+                    conn.Open();
+                    sql = @"select * from cl_update(:_id, :_firstname, :_midname, :_lastname, :_phonenumber, :_idchoose, :_passportseries, :_passportnumber)";
+                    cmd = new NpgsqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["cl_id"].Value.ToString()));
+                    cmd.Parameters.AddWithValue("_firstname", update.Firstname);
+                    cmd.Parameters.AddWithValue("_midname", update.Midname);
+                    cmd.Parameters.AddWithValue("_lastname", update.Lastname);
+                    cmd.Parameters.AddWithValue("_phonenumber", update.Phonenumber);
+                    cmd.Parameters.AddWithValue("_idchoose", update.IdChoose);
+                    cmd.Parameters.AddWithValue("_passportseries", update.PassportSeries);
+                    cmd.Parameters.AddWithValue("_passportnumber", update.PassportNumber);
+                    result = (int)cmd.ExecuteScalar();
+                    conn.Close();
+                    if (result == 1)
+                    {
+                        MessageBox.Show("Updated successfully");
+                        Select();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Updated failed");
+                    }
                 }
             }
             catch (Exception ex)
             {
                 conn.Close();
-                MessageBox.Show("Deleted fail. Error: " + ex.Message);
+                MessageBox.Show("Uodated fail. Error: " + ex.Message);
             }
         }
 
@@ -151,6 +157,11 @@ namespace CursachSUBD
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose client to see the selection");
+                return;
+            }
             Chooses chos = new Chooses();
             chos.ShowDialog();
         }
@@ -175,6 +186,12 @@ namespace CursachSUBD
         private void button6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Hotels hotels = new Hotels();
+            hotels.ShowDialog();
         }
     }
 }

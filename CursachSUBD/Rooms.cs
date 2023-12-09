@@ -44,40 +44,120 @@ namespace CursachSUBD
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // Добавление записи о номере
         {
             int result;
             RoomRedact insert = new RoomRedact();
             insert.ShowDialog();
-            conn.Open();
-            sql = @"select * from r_insert(:_status, :_type, :_cost, :_adress, :_idhotel)";
-            cmd = new NpgsqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("_status", insert.Status);
-            cmd.Parameters.AddWithValue("_type", insert.Type);
-            cmd.Parameters.AddWithValue("_cost", insert.Cost);
-            cmd.Parameters.AddWithValue("_adress", insert.Adress);
-            cmd.Parameters.AddWithValue("_idhotel", int.Parse(insert.IdHotel));
-            result = (int)cmd.ExecuteScalar();
-            conn.Close();
-            if (result == 1)
+            if (insert.res == 1)
             {
-                MessageBox.Show("Inserted new room successfully");
-                Select();
-            }
-            else
-            {
-                MessageBox.Show("Inserted fail");
+                conn.Open();
+                sql = @"select * from r_insert(:_status, :_type, :_cost, :_adress, :_idhotel)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_status", insert.Status);
+                cmd.Parameters.AddWithValue("_type", insert.Type);
+                cmd.Parameters.AddWithValue("_cost", insert.Cost);
+                cmd.Parameters.AddWithValue("_adress", insert.Adress);
+                cmd.Parameters.AddWithValue("_idhotel", insert.IdHotel);
+                result = (int)cmd.ExecuteScalar();
+                conn.Close();
+                if (result == 1)
+                {
+                    MessageBox.Show("Inserted new room successfully");
+                    Select();
+                }
+                else
+                {
+                    MessageBox.Show("Inserted fail");
+                }
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Изменение информации о номере
         {
-
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose room to update");
+                return;
+            }
+            int result;
+            RoomRedact update = new RoomRedact(dataGridView1.Rows[rowIndex].Cells["r_status"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["r_type"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["r_cost"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["r_adress"].Value.ToString(),
+                dataGridView1.Rows[rowIndex].Cells["r_idhotel"].Value.ToString());
+            update.ShowDialog();
+            try
+            {
+                if (update.res == 1)
+                {
+                    conn.Open();
+                    sql = @"select * from r_update(:_id, :_status, :_type, :_cost, :_adress, :_idhotel)";
+                    cmd = new NpgsqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["r_id"].Value.ToString()));
+                    cmd.Parameters.AddWithValue("_status", update.Status);
+                    cmd.Parameters.AddWithValue("_type", update.Type);
+                    cmd.Parameters.AddWithValue("_cost", update.Cost);
+                    cmd.Parameters.AddWithValue("_adress", update.Adress);
+                    cmd.Parameters.AddWithValue("_idhotel", update.IdHotel);
+                    result = (int)cmd.ExecuteScalar();
+                    conn.Close();
+                    if (result == 1)
+                    {
+                        MessageBox.Show("Updated successfully");
+                        Select();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Updated failed");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                MessageBox.Show("Uodated fail. Error: " + ex.Message);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose room to delete");
+                return;
+            }
+            try
+            {
+                conn.Open();
+                sql = @"select * from r_delete(:_id)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["r_id"].Value.ToString()));
+                if ((int)cmd.ExecuteScalar() == 1)
+                {
+                    MessageBox.Show("Delete room successfully");
+                    rowIndex = -1;
+                    conn.Close();
+                    Select();
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                MessageBox.Show("Deleted fail. Error: " + ex.Message);
+            }
+        }
 
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                rowIndex = e.RowIndex;
+                /*                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["firstname"].Value.ToString();
+                                textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["midname"].Value.ToString();
+                                textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["lastname"].Value.ToString();*/
+            }
         }
     }
 }
