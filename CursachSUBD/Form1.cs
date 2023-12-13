@@ -162,8 +162,28 @@ namespace CursachSUBD
                 MessageBox.Show("Choose client to see the selection");
                 return;
             }
-            Chooses chos = new Chooses();
+            Chooses chos = new Chooses(dataGridView1.Rows[rowIndex].Cells["cl_idchoose"].Value.ToString());
             chos.ShowDialog();
+            if (chos.resultString != "")
+            {
+                int result;
+                conn.Open();
+                sql = @"select * from cl_update(:_id, :_idchoose)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["cl_id"].Value.ToString()));
+                cmd.Parameters.AddWithValue("_idchoose", chos.resultString);
+                result = (int)cmd.ExecuteScalar();
+                conn.Close();
+                if (result == 1)
+                {
+                    MessageBox.Show("Updated successfully");
+                    Select();
+                }
+                else
+                {
+                    MessageBox.Show("Updated failed");
+                }
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)

@@ -46,7 +46,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 22);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(879, 309);
+            this.dataGridView1.Size = new System.Drawing.Size(844, 309);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -73,7 +73,7 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(782, 337);
+            this.button3.Location = new System.Drawing.Point(747, 337);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(109, 24);
             this.button3.TabIndex = 3;
@@ -93,7 +93,8 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(528, 337);
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(873, 66);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(121, 38);
             this.button5.TabIndex = 5;
@@ -103,7 +104,8 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(655, 337);
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Location = new System.Drawing.Point(873, 110);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(121, 38);
             this.button6.TabIndex = 6;
@@ -113,7 +115,8 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(401, 337);
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.Location = new System.Drawing.Point(873, 22);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(121, 38);
             this.button7.TabIndex = 7;
@@ -125,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(907, 398);
+            this.ClientSize = new System.Drawing.Size(1006, 398);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -135,7 +138,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Информационная система бронирования";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

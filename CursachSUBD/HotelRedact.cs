@@ -24,13 +24,24 @@ namespace CursachSUBD
         {
             InitializeComponent();
         }
-
+        public HotelRedact(string nm, string own, string adr, int rat, byte [] img)
+        {
+            InitializeComponent();
+            textBox1.Text = nm;
+            textBox2.Text = own;
+            textBox3.Text = adr;
+            textBox4.Text = rat.ToString();
+            this.img = img;
+        }
         private void button3_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog(); // создаем диалоговое окно
             openFileDialog.ShowDialog(); 
-            img = File.ReadAllBytes(openFileDialog.FileName);
-            textBox5.Text = openFileDialog.FileName;
+            if (openFileDialog.FileName != "")
+            {
+                img = File.ReadAllBytes(openFileDialog.FileName);
+                textBox5.Text = openFileDialog.FileName;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -46,7 +57,7 @@ namespace CursachSUBD
             }
             else
             {
-                MessageBox.Show("Данные о номере не заполнены!");
+                MessageBox.Show("Данные о отеле не заполнены!");
             }
         }
 

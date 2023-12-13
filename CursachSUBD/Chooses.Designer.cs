@@ -67,6 +67,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(61, 20);
             this.textBox1.TabIndex = 2;
+            this.textBox1.Text = "0";
             // 
             // textBox2
             // 
@@ -74,6 +75,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(61, 20);
             this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "10000";
             // 
             // label3
             // 
@@ -100,7 +102,8 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Эконом",
             "Стандарт",
-            "Люкс"});
+            "Люкс",
+            "-"});
             this.comboBox1.Location = new System.Drawing.Point(132, 39);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(78, 21);
@@ -139,6 +142,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(34, 20);
             this.textBox3.TabIndex = 10;
+            this.textBox3.Text = "1";
             // 
             // button2
             // 
@@ -169,6 +173,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Chooses";
             this.Text = "Chooses";
+            this.Load += new System.EventHandler(this.Chooses_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

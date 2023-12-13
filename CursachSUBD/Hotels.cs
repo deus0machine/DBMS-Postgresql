@@ -51,7 +51,7 @@ namespace CursachSUBD
             conn = new NpgsqlConnection(connstring);
             Select();
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //Добавление записи
         {
             int result;
             HotelRedact insert = new HotelRedact();
@@ -88,6 +88,10 @@ namespace CursachSUBD
                 label1.Text = dataGridView1.Rows[e.RowIndex].Cells["h_name"].Value.ToString();
                 if (dataGridView1.CurrentRow.Cells["h_img"].Value is DBNull)
                 {
+                    pictureBox1.Image = null;
+                }
+                else
+                {
                     byte[] imageData = (byte[])dataGridView1.CurrentRow.Cells["h_img"].Value;
                     using (MemoryStream ms = new MemoryStream(imageData))
                     {
@@ -98,6 +102,96 @@ namespace CursachSUBD
                 /*                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells["firstname"].Value.ToString();
                                 textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells["midname"].Value.ToString();
                                 textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["lastname"].Value.ToString();*/
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e) // Обновление записи
+        {
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose hotel to update");
+                return;
+            }
+            int result;
+            string name = "";
+            string owner = "";
+            string adress = "";
+            int rating = 0;
+            byte[] img = { };
+            if (dataGridView1.Rows[rowIndex].Cells["h_name"].Value.ToString() != null)
+                name = dataGridView1.Rows[rowIndex].Cells["h_name"].Value.ToString();
+            if (dataGridView1.Rows[rowIndex].Cells["h_owner"].Value.ToString() != null)
+                owner = dataGridView1.Rows[rowIndex].Cells["h_owner"].Value.ToString();
+            if (dataGridView1.Rows[rowIndex].Cells["h_adress"].Value.ToString() != null)
+                adress = dataGridView1.Rows[rowIndex].Cells["h_adress"].Value.ToString();
+            bool ratin = int.TryParse(dataGridView1.Rows[rowIndex].Cells["h_rating"].Value.ToString(), out rating);
+            if (dataGridView1.Rows[rowIndex].Cells["h_img"].Value is DBNull) { }
+                
+            else
+            {
+                        img = (byte[])dataGridView1.Rows[rowIndex].Cells["h_img"].Value;
+                    }
+            HotelRedact update = new HotelRedact(name, owner, adress, rating, img);
+            update.ShowDialog();
+            try
+            {
+                if (update.res == 1)
+                {
+                    conn.Open();
+                    sql = @"select * from h_update(:_id, :_name, :_owner, :_adress, :_rating, :_img)";
+                    cmd = new NpgsqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["h_id"].Value.ToString()));
+                    cmd.Parameters.AddWithValue("_name", update.name);
+                    cmd.Parameters.AddWithValue("_owner", update.owner);
+                    cmd.Parameters.AddWithValue("_adress", update.adress);
+                    cmd.Parameters.AddWithValue("_rating", update.rating);
+                    cmd.Parameters.AddWithValue("_img", update.img);
+                    result = (int)cmd.ExecuteScalar();
+                    conn.Close();
+                    if (result == 1)
+                    {
+                        MessageBox.Show("Updated successfully");
+                        Select();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Updated failed");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                MessageBox.Show("Uodated fail. Error: " + ex.Message);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (rowIndex < 0)
+            {
+                MessageBox.Show("Choose hotel to delete");
+                return;
+            }
+            try
+            {
+                conn.Open();
+                sql = @"select * from h_delete(:_id)";
+                cmd = new NpgsqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["h_id"].Value.ToString()));
+                if ((int)cmd.ExecuteScalar() == 1)
+                {
+                    MessageBox.Show("Delete hotel successfully");
+                    rowIndex = -1;
+                    conn.Close();
+                    Select();
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                MessageBox.Show("Deleted fail. Error: " + ex.Message);
             }
         }
     }
