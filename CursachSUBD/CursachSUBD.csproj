@@ -131,6 +131,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Grids.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Grids.Designer.cs">
+      <DependentUpon>Grids.cs</DependentUpon>
+    </Compile>
     <Compile Include="HotelRedact.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grids.resx">
+      <DependentUpon>Grids.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HotelRedact.resx">
       <DependentUpon>HotelRedact.cs</DependentUpon>

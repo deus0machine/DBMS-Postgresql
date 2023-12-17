@@ -13,6 +13,18 @@ namespace CursachSUBD
         {
             InitializeComponent();
         }
+        public Form1(string login)
+        {
+            InitializeComponent();
+            if (login == "user")
+            {
+                button6.Enabled = false;
+            }
+            else
+            {
+                button6.Enabled = true;
+            }
+        }
         string connstring = String.Format("Server={0};Port={1};" + "User Id ={2};Password={3};Database={4}", "localhost", 5432, "postgres", "18201905", "systemBooking");
         NpgsqlConnection conn;
         string sql;
@@ -21,6 +33,7 @@ namespace CursachSUBD
         int rowIndex = -1;
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             conn = new NpgsqlConnection(connstring);
             Select();
         }
@@ -213,6 +226,12 @@ namespace CursachSUBD
         {
             Hotels hotels = new Hotels();
             hotels.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Grids grids = new Grids();
+            grids.ShowDialog();
         }
     }
 }

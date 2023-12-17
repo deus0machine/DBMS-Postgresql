@@ -77,7 +77,7 @@ namespace CursachSUBD
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Обновление данных
         {
             if (rowIndex < 0)
             {
@@ -96,8 +96,9 @@ namespace CursachSUBD
                 if (update.res == 1)
                 {
                     conn.Open();
-                    sql = @"select * from ag_update(:_idclient, :_idroom, :_idhotel, :_resstart, :_resend)";
+                    sql = @"select * from ag_update(:_id, :_idclient, :_idroom, :_idhotel, :_resstart, :_resend)";
                     cmd = new NpgsqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("_id", int.Parse(dataGridView1.Rows[rowIndex].Cells["ag_id"].Value.ToString()));
                     cmd.Parameters.AddWithValue("_idclient", update.idClient);
                     cmd.Parameters.AddWithValue("_idroom", update.idRoom);
                     cmd.Parameters.AddWithValue("_idhotel", update.idHotel);

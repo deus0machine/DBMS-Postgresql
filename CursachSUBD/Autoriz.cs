@@ -5,6 +5,7 @@ namespace CursachSUBD
 {
     public partial class Autoriz : Form
     {
+        string login = "";
         public Autoriz()
         {
             InitializeComponent();
@@ -12,10 +13,18 @@ namespace CursachSUBD
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "postgres" && textBox2.Text == "18201905")
+            if (textBox1.Text == "postgres" && textBox2.Text == "admin")
             {
                 this.Hide();
-                Form1 form = new Form1();
+                login = "admin";
+                Form1 form = new Form1(login);
+                form.ShowDialog();
+            }
+            else if (textBox1.Text == "user" && textBox2.Text == "user")
+            {
+                this.Hide();
+                login = "user";
+                Form1 form = new Form1(login);
                 form.ShowDialog();
             }
             else
