@@ -101,6 +101,12 @@
     <Compile Include="Agreements.Designer.cs">
       <DependentUpon>Agreements.cs</DependentUpon>
     </Compile>
+    <Compile Include="AgreementsRedact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AgreementsRedact.Designer.cs">
+      <DependentUpon>AgreementsRedact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Autoriz.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +159,9 @@
     </Compile>
     <EmbeddedResource Include="Agreements.resx">
       <DependentUpon>Agreements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AgreementsRedact.resx">
+      <DependentUpon>AgreementsRedact.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Autoriz.resx">
       <DependentUpon>Autoriz.cs</DependentUpon>

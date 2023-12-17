@@ -16,7 +16,7 @@ namespace CursachSUBD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Autoriz());
+            Application.Run(new Form1());
         }
     }
 }
