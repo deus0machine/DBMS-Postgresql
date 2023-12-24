@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Npgsql;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CursachSUBD
 {
@@ -232,6 +230,11 @@ namespace CursachSUBD
         {
             Grids grids = new Grids();
             grids.ShowDialog();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

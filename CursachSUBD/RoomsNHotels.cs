@@ -1,13 +1,19 @@
 ﻿using Npgsql;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CursachSUBD
 {
-    public partial class Grids : Form
+    public partial class RoomsNHotels : Form
     {
-        public Grids()
+        public RoomsNHotels()
         {
             InitializeComponent();
         }
@@ -17,7 +23,7 @@ namespace CursachSUBD
         NpgsqlCommand cmd;
         DataTable dt;
         int rowIndex = -1;
-        private void Grids_Load(object sender, EventArgs e)
+        private void RoomsNHotels_Load(object sender, EventArgs e)
         {
             conn = new NpgsqlConnection(connstring);
             Select();
@@ -27,7 +33,7 @@ namespace CursachSUBD
             try
             {
                 conn.Open();
-                sql = @"select * from grid";
+                sql = @"select * from rooms join hotels on hotels.h_id = r_idhotel";
                 cmd = new NpgsqlCommand(sql, conn);
                 dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());

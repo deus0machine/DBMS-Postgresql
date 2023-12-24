@@ -159,5 +159,11 @@ namespace CursachSUBD
                                 textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells["lastname"].Value.ToString();*/
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            RoomsNHotels rh = new RoomsNHotels();
+            rh.ShowDialog();
+        }
     }
 }
